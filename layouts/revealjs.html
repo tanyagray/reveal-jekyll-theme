@@ -1,0 +1,92 @@
+{% include head.html %}
+{% include header.html %}
+
+<!-- slideshow goes before the main page content -->
+<div class="slideshow">
+
+	<div class="reveal">
+
+		<!-- Any section element inside of this container is displayed as a slide -->
+		<div class="slides">
+
+
+
+
+
+
+
+
+
+
+{% for slide in page.slides %}
+
+<!-- slide -->
+<section class="{{ slide.class }}"
+		
+	{% if slide.class == 'title-slide' %}
+		id="{{ slide.section }}"
+		data-background="{{ slide.background }}" 
+		data-background-color="{{ site.themecolor }}"
+		data-background-size="200px" 
+		data-background-repeat="repeat"
+	{% else %}
+		id="{{ slide.title }}"
+	{% endif %}
+	>
+		
+{{ slide.content | 
+		replace: '[[BASE_URL]]', site.baseurl | 
+		replace: '[[THEME_IMAGES]]', site.theme_images | 
+		replace: '[[COURSE_IMAGES]]', site.course_images | 
+		markdownify }}
+
+<aside class="notes">
+{{ slide.notes | 
+		replace: '[[BASE_URL]]', site.baseurl |
+		markdownify }}
+</aside>
+
+</section>
+
+{% endfor %}
+
+
+
+
+
+
+
+
+		</div>
+
+	</div><!-- .reveal -->
+
+
+
+
+	<div class="sidenotes">
+		<div class="content">
+			<!-- display notes here using js -->
+			<p>Loading...</p>
+		</div>
+	</div>
+
+</div><!-- .slideshow -->
+
+
+
+<!-- main page content, below slideshow -->
+<main>
+
+	<div class="page-content">
+	
+		{{ content }}
+
+	</div>
+
+	{% include footer.html %}
+	
+
+</main>
+
+{% include foot.html %}

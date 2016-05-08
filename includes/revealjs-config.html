@@ -1,0 +1,56 @@
+<script src="{{ site.baseurl }}/theme/libs/revealjs/lib/js/head.min.js"></script>
+<script src="{{ site.baseurl }}/theme/libs/revealjs/js/reveal.js"></script>
+
+<script>
+
+	// Full list of configuration options available here:
+	// https://github.com/hakimel/reveal.js#configuration
+	Reveal.initialize({
+		controls: true,
+		progress: true,
+		history: true,
+		center: true,
+
+		width: 1024,
+		height: 576,
+		margin: 0.1,
+		maxScale: 5,
+
+		theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+		transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+		// Optional libraries used to extend on reveal.js
+		dependencies: [
+			{ src: '{{ site.baseurl }}/theme/libs/revealjs/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+			{ src: '{{ site.baseurl }}/theme/libs/revealjs/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+			{ src: '{{ site.baseurl }}/theme/libs/revealjs/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+			{ src: '{{ site.baseurl }}/theme/libs/sidenotes/sidenotes.js' },
+			{ src: '{{ site.baseurl }}/theme/libs/sidenotes/libs/js.cookie.js' }
+		]
+	});
+    
+    function checkNotesState() {
+
+	    // show the notes on page load if notesByDefault has been 
+	    // set to true in the page's front matter.
+	    {% if page.notesByDefault %}
+	      var notesByDefault = {{ page.notesByDefault }};
+	    {% else %}
+	      var notesByDefault = false;
+	    {% endif %}
+
+	    if(notesByDefault == true) {
+	    	Sidenotes.showNotes();
+	    }
+	}
+
+	Reveal.addEventListener( 'slidechanged', function( event ) {
+		slide = $(event.currentSlide);
+		if(slide.hasClass('fullscreen')) {
+			slide.css('zoom', 1 / Reveal.getScale());
+			slide.children().css('zoom', Reveal.getScale());
+		}
+	});
+		
+
+</script>
